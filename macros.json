@@ -1,0 +1,18 @@
+{
+    "macros": {
+        "word": {
+
+        },
+        "action": {
+            "#cb": ""
+        }
+    },
+    "macro_settings": {
+        "shuffle": {
+            "enabled": "false",
+            "shuffle_macros": [
+
+            ]
+        }
+    }
+}
