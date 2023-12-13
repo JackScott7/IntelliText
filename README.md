@@ -1,6 +1,6 @@
 # IntelliText
 
-IntelliText to keyboard input and performs actions based on the input. It is designed to support word and action macros triggered by specific characters.
+IntelliText listens to keyboard input and performs actions based on the input. It is designed to support word and action macros triggered by specific characters.
 
 - Word Macros: Words or phrases triggered by the '!' character.
 - Action Macros: Special actions triggered by the '#' character.
@@ -67,4 +67,4 @@ The script reads macro definitions from a `macros.json` file, allowing users to 
 4. Type your macros during keyboard input to trigger predefined words or actions.
 
 ## Example
-![Example GIF](https://imgur.com/gallery/DbWOZ4E)
+![Example GIF](https://i.imgur.com/kTLNyHA.gif)
