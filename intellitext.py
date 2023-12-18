@@ -94,7 +94,8 @@ class IntelliText:
                 # only add the key if the macro starts with a specifier
                 if any([self.__macro.startswith(specifier) for specifier in self.__specifiers]):
                     # add actual value of key to macro
-                    self.__macro += key.char
+                    if key.char is not None:
+                        self.__macro += key.char
 
             # word macros start with !
             if self.__macro and self.__macro.startswith('!'):
