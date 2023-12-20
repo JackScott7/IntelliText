@@ -85,7 +85,9 @@ class IntelliText:
 
     def __on_press(self, key) -> None:
         try:
-            if key == Key.shift:
+            # update macro with backspace to remove the last character
+            if key == Key.backspace:
+                self.__macro = self.__macro[:-1]
                 return
 
             if key.char in self.__specifiers:
