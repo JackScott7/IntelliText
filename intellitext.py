@@ -1,6 +1,7 @@
 import json
 import sys
 import pyperclip as clipboard
+import subprocess as sp
 from pynput.keyboard import Controller, Key, Listener
 from random import choice
 
@@ -48,9 +49,11 @@ class IntelliText:
         shuffle = self.setting.get('macro_settings').get('shuffle')
         return shuffle.get('shuffle_macros') if shuffle.get('enabled') else None
 
+    def __untype_macro(self) -> None:
+        [self.controller.tap(Key.backspace) for _ in range(len(self.__macro))]
+
     def __type_macro(self, macro: str, shuffle=False) -> None:
-        for _ in range(len(macro)):
-            self.controller.tap(Key.backspace)
+        self.__untype_macro()
 
         if shuffle:
             self.controller.type(choice(self.setting.get('macros').get('word').get(macro).split(',')))
@@ -69,19 +72,25 @@ class IntelliText:
                 self.__type_macro(self.__macro)
 
     def __process_action_macro(self) -> None:
-        if self.__macro in self.setting.get('macros').get('action'):
+        action = self.setting.get('macros').get('action')
+        if self.__macro in action:
             # if the macro is defined in the macros.json, process the value
             # macros that start with #r are run actions,
             #  meaning a process with that name would run
+            try:
+                if self.__macro.startswith('#r'):
+                    self.__untype_macro()
+                    sp.Popen(action.get(self.__macro))
 
-            # macros that start with #c are run actions too,
-            #  meaning the defined command would execute
-            if self.__macro == '#cb':
-                for _ in range(len(self.__macro)):
-                    self.controller.tap(Key.backspace)
-                self.controller.type(clipboard.paste())
+                # macros that start with #c are run actions too,
+                #  meaning the defined command would execute
+                if self.__macro == '#cb':
+                    self.__untype_macro()
+                    self.controller.type(clipboard.paste())
 
-            self.__macro = ''
+                self.__macro = ''
+            except OSError:
+                sys.stderr.write(f"`{self.__macro}` value is not a valid executable\n{action.get(self.__macro)}")
 
     def __on_press(self, key) -> None:
         try:

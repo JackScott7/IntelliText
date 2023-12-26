@@ -28,11 +28,14 @@ The script reads macro definitions from a `macros.json` file, allowing users to 
     ```
 
 ## Usage
-### Action Macros are not implemented at the moment, tho they will be added in the future. Only the predefined `#cb` works for now.
+~~### Action Macros are not implemented at the moment, tho they will be added in the future. Only the predefined `#cb` works for now.~~
+
+✅ Action Macros are now implemented, you can now define your own action macros in the `macros.json` file.
+For now, only run actions are supported, for example `#rsomeexe` will run the `some.exe` executable.
 
 1. Define your word and action macros in the `macros.json` file.
 
-    Example `macros.json`:
+   Example `macros.json`:
 
     ```json
     {
@@ -43,7 +46,8 @@ The script reads macro definitions from a `macros.json` file, allowing users to 
           "!lang": "C#,Python,Rust,Go"
         },
         "action": {
-          "#cb": ""
+          "#cb": "",
+          "#rsomeexe": "path\\to\\some.exe"
         }
       },
       "macro_settings": {
@@ -63,7 +67,7 @@ The script reads macro definitions from a `macros.json` file, allowing users to 
     python intellitext.py
     ```
 
-3. The Macro Shuffle setting can be set to `true` or `false`, depending on if you want to shuffle the word macros that you defined, for example `!lang` that is seperated by commas, everytime `!lang` is detected it randomly selects or shuffles from the word macro list. 
+3. The Macro Shuffle setting can be set to `true` or `false`, depending on if you want to shuffle the word macros that you defined, for example `!lang` that is seperated by commas, everytime `!lang` is detected it randomly selects or shuffles from the word macro list.
 4. Type your macros during keyboard input to trigger predefined words or actions.
 
 ## Example
