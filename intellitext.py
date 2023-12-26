@@ -47,7 +47,10 @@ class IntelliText:
 
     def __get_shuffle_settings(self):
         shuffle = self.setting.get('macro_settings').get('shuffle')
-        return shuffle.get('shuffle_macros') if shuffle.get('enabled') else None
+        # using eval(str.title()) to convert the json string to python boolean
+        # the str.title just capitalizes only the first letter of each word which in this case
+        # it's only the true or false in lowercase
+        return shuffle.get('shuffle_macros') if eval(shuffle.get('enabled').title()) else None
 
     def __untype_macro(self) -> None:
         [self.controller.tap(Key.backspace) for _ in range(len(self.__macro))]
@@ -55,10 +58,19 @@ class IntelliText:
     def __type_macro(self, macro: str, shuffle=False) -> None:
         self.__untype_macro()
 
-        if shuffle:
-            self.controller.type(choice(self.setting.get('macros').get('word').get(macro).split(',')))
+        macro_value = self.setting.get('macros').get('word').get(macro)
+
+        if ',' in macro_value:
+            macro_values = macro_value.split(',')
         else:
-            self.controller.type(self.setting.get('macros').get('word').get(macro))
+            macro_values = [macro_value]
+
+        if shuffle:
+            selected_value = choice(macro_values)
+        else:
+            selected_value = macro_values[0]
+
+        self.controller.type(selected_value)
 
         self.__macro = ''
 
