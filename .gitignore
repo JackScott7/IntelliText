@@ -1,1 +1,15 @@
 /.idea
+
+__pycache__/
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
