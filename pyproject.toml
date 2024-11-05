@@ -1,3 +1,37 @@
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "intellitext"
+version = "0.1.1"
+authors = [
+    { name = "Jack Scott", email = "cloner.bl12@gmail.com" },
+]
+description = "IntelliText is a powerful, customizable keyboard macro and text expansion tool that helps you automate repetitive typing tasks and execute custom actions. It's designed to boost your productivity by allowing you to create shortcuts for frequently used text, commands, and actions."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Text Processing :: General",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: Microsoft :: Windows",
+]
+dependencies = [
+    "pyperclip>=1.8.2",
+    "pynput>=1.7.6",
+]
+
+[project.urls]
+Homepage = "https://github.com/JackScott7/intellitext"
+
+[tool.setuptools]
+package-dir = {"intellitext" = "src"}
+packages = ["intellitext"]
+include-package-data = true
+
+[project.scripts]
+intellitext = "intellitext.cli:main"

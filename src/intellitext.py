@@ -242,12 +242,3 @@ class IntelliText:
         except subprocess.CalledProcessError as cpe:
             self.__untype_macro()
             self.controller.type(f"{self.__macro[1:-1]} err output: {cpe.output.strip()}")
-
-
-def main():
-    intellitext = IntelliText()
-    intellitext.listen()
-
-
-if __name__ == '__main__':
-    main()
