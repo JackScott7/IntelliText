@@ -6,6 +6,7 @@ import pyperclip as clipboard
 import subprocess as sp
 from pynput.keyboard import Controller, Key, Listener
 from random import choice
+from json import JSONDecodeError
 
 
 class IntelliText:
@@ -32,6 +33,10 @@ class IntelliText:
                 os.mkdir(self.__it_path)
 
             self.setting: dict = json.load(open(f"{self.__it_path}\\it_macros.json", 'r'))
+        except JSONDecodeError as decode_err:
+            print(f"Error on reading it_macros.json,"
+                  f" check your config file\n{decode_err.msg} on line {decode_err.lineno}")
+            exit(1)
         except FileNotFoundError:
             with open(f"{self.__it_path}\\it_macros.json", 'w') as f:
                 obj = {
