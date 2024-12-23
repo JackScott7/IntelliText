@@ -17,6 +17,9 @@
                         "#ite": {
                             "type": "string"
                         },
+                        "#itref": {
+                            "type": "string"
+                        },
                         "#cb": {
                             "type": "string"
                         }
@@ -26,6 +29,7 @@
                     },
                     "required": [
                         "#ite",
+                        "#itref",
                         "#cb"
                     ]
                 }
