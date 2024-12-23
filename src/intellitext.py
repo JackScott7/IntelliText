@@ -45,6 +45,7 @@ class IntelliText:
                         'word': {},
                         'action': {
                             "#ite": "",
+                            "#itref": "",
                             "#cb": ""
                         }
                     },
@@ -126,12 +127,12 @@ class IntelliText:
             # macros that start with #r are run actions,
             #  meaning a process with that name would run
             try:
+                # macros that start with #c are run actions too,
+                #  meaning the defined command would execute
                 if self.__macro.startswith('#r'):
                     self.__untype_macro()
                     sp.Popen(action.get(self.__macro))
 
-                # macros that start with #c are run actions too,
-                #  meaning the defined command would execute
                 elif self.__macro == "#ite":
                     self.__untype_macro()
                     exit(0)
@@ -139,6 +140,10 @@ class IntelliText:
                 elif self.__macro == '#cb':
                     self.__untype_macro()
                     self.controller.type(clipboard.paste())
+
+                elif self.__macro == '#itref':
+                    self.__untype_macro()
+                    self.__refresh_settings()
 
                 self.__macro = ''
             except OSError as ose:
@@ -203,14 +208,13 @@ class IntelliText:
         macro = self.__macro.strip().split()
         has_args = False
         macro = [x for x in macro if x != ' ' or x != '']
-        if not macro[-1] == '$': # indicates that the last element is attached to the % specifier
-            macro[-1] = macro[-1][:-1] # only grap the arg and not the % char
+        if not macro[-1] == '$':  # indicates that the last element is attached to the % specifier
+            macro[-1] = macro[-1][:-1]  # only grap the arg and not the % char
             if len(macro) > 1:
                 has_args = True
         else:
             macro = macro[:-1]
         return has_args, macro
-
 
     def __process_extension(self, extensions) -> None:
         if not extensions:
@@ -247,3 +251,12 @@ class IntelliText:
         except subprocess.CalledProcessError as cpe:
             self.__untype_macro()
             self.controller.type(f"{self.__macro[1:-1]} err output: {cpe.output.strip()}")
+
+    def __refresh_settings(self) -> None:
+        try:
+            with open(f"{self.__it_path}\\it_macros.json", 'r') as macros:
+                self.setting = json.load(macros)
+            print("[+] Settings refreshed")
+        except JSONDecodeError as decode_err:
+            print(f"Error on reading it_macros.json,"
+                  f" check your config file\n{decode_err.msg} on line {decode_err.lineno}")
