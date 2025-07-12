@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "intellitext"
-version = "0.2.2"
+version = "0.3.2"
 authors = [
     { name = "Jack Scott", email = "cloner.bl12@gmail.com" },
 ]

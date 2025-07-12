@@ -81,7 +81,7 @@ class IntelliText:
         enabled = shuffle.get('enabled')
         if enabled is not bool:
             enabled = eval(enabled.title())
-        return shuffle.get('shuffle_macros') if enabled else None
+        return shuffle.get('shuffle_macros') if enabled else []
 
     @property
     def __extension_enabled(self) -> bool:
@@ -113,11 +113,10 @@ class IntelliText:
         self.__macro = ''
 
     def __process_word_macro(self) -> None:
+        # if the macro is defined in the it_macros.json, process the value
         if self.__macro in self.setting.get('macros').get('word'):
-            # if the macro is defined in the it_macros.json, process the value
-            if self.__shuffle_macros:
-                # shuffle macro if in shuffle list
-                self.__type_macro(self.__macro, self.__macro in self.__shuffle_macros)
+            # shuffle macro if in shuffle list
+            self.__type_macro(self.__macro, self.__macro in self.__shuffle_macros)
 
     def __process_action_macro(self) -> None:
         action: dict = self.setting.get('macros').get('action')
